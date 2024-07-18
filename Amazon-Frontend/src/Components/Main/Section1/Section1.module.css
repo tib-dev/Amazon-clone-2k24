@@ -1,0 +1,36 @@
+.image-grid {
+  display: none;
+}
+a {
+  color: rgb(111, 231, 231);
+}
+a:hover {
+  color: #f3ac91;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.col-sm-4 div {
+  margin: 10px;
+}
+/* #small-image {
+  display: none;
+}
+.images {
+}
+.image-card {
+}
+#section-wrapper {
+  display: none;
+} */
+.item-name {
+  display: none;
+}
+
+
+.grid-wrapper{
+  position: -50%;
+}
