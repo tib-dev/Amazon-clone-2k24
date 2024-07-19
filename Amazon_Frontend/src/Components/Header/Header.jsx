@@ -6,7 +6,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import brand from "../../assets/image/amazonbrand.png";
 import { MdOutlineArrowDropDownCircle } from "react-icons/md";
 import { TiThMenu, TiLocationOutline } from "react-icons/ti";
-
+import { Link } from "react-router-dom";
 function Header() {
   const selectRef = useRef(null);
   const [selectWidth, setSelectWidth] = useState("auto");
@@ -61,17 +61,20 @@ function Header() {
       <div className={classes.nav_top_wrapper}>
         <div className={classes.nav_left_wrapper}>
           <div className={classes.logo}>
-            <a href="#">
+            <Link to="/">
               <img src={brand} alt="Brand" />
-            </a>
+            </Link>
           </div>
           <div className={classes.delivery_address}>
-            <a href="#" className={classes.delivery_to}>
+            <Link to="" className={classes.delivery_to}>
               <p>Deliver to</p>
-              <span>
-                <TiLocationOutline className={classes.gpsIcon} /> Ethiopia
-              </span>
-            </a>
+              <div className={classes.location}>
+                <span>
+                  <TiLocationOutline className={classes.gpsIcon} />
+                </span>
+                <span> Ethiopia</span>
+              </div>
+            </Link>
           </div>
         </div>
         <div className={classes.nav_search_wrapper}>
@@ -125,33 +128,33 @@ function Header() {
         </div>
         <div className={classes.nav_right_wrapper}>
           <div className={classes.lang}>
-            <a href="#">
+            <Link to="">
               <img src="#" alt="" />
               <span>EN</span>
               <RiArrowDropDownFill className={classes.dropdown_icon_small} />
-            </a>
+            </Link>
           </div>
           <div className={classes.account}>
-            <a href="#">
+            <Link to="">
               <p>Hello, sign in</p>
               <span>
                 Account & Lists{" "}
                 <RiArrowDropDownFill className={classes.dropdown_icon_small} />
               </span>
-            </a>
+            </Link>
           </div>
           <div className={classes.order}>
-            <a href="#">
+            <Link to="/order">
               <p>Returns</p>
               <span>& Orders</span>
-            </a>
+            </Link>
           </div>
           <div className={classes.cart}>
-            <a href="#">
+            <Link to="/cart">
               <FiShoppingCart className={classes.cart_icon} />
               <span className={classes.added_items}>0</span>
               <span>Cart</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -161,24 +164,24 @@ function Header() {
             <span className={classes.menu_icon}>
               <TiThMenu />
             </span>
-            <a href="#">All</a>
+            <Link to="">All</Link>
           </div>
           <div className={classes.nav_shop}>
             <ul className={classes.shop_list}>
               <li>
-                <a href="#">Today's Deals</a>
+                <Link to="">Today's Deals</Link>
               </li>
               <li>
-                <a href="#">Customer Service</a>
+                <Link to="">Customer Service</Link>
               </li>
               <li>
-                <a href="#">Registry</a>
+                <Link to="">Registry</Link>
               </li>
               <li>
-                <a href="#">Gift Cards</a>
+                <Link to="">Gift Cards</Link>
               </li>
               <li>
-                <a href="#">Sell</a>
+                <Link to="">Sell</Link>
               </li>
             </ul>
           </div>

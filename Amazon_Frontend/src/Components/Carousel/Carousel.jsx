@@ -7,7 +7,7 @@ import { TfiAngleLeft } from "react-icons/tfi";
 
 function CarouselComponent() {
   return (
-    <div className={classes.carouselWrapper}>
+    <div className={classes.carousel_Wrapper}>
       <Carousel
         autoPlay={true}
         infiniteLoop={true}

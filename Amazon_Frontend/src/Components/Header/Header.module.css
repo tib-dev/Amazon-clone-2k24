@@ -73,6 +73,10 @@ ul li {
   align-items: center;
   justify-content: space-between;
   display: flex;
+  padding: 0;
+}
+.nav_right_wrapper a {
+  padding: 0;
 }
 
 .nav_main {
@@ -88,17 +92,19 @@ ul li {
 .lang,
 .order,
 .account {
-  display: flex;
   padding-inline: 10px;
 }
-.lang {
-  padding-bottom: 0;
-  margin-bottom: 0;
+
+.order p,
+.account p {
+  margin: 0;
+  padding: 0;
+  font-size: 12x;
 }
 
 .cart_icon {
-  width: 2.5rem; /* Adjust size to match Amazon's */
-  height: 2.5rem;
+  width: 44px;
+  height: 40px;
 }
 
 .cart {
@@ -110,7 +116,7 @@ ul li {
 .added_items {
   position: absolute;
   top: 0;
-  right: -10px;
+  right: 44px;
   background-color: #ff9900;
   color: #fff;
   padding: 2px 6px;
@@ -182,8 +188,8 @@ ul li {
 }
 
 .nav_search_wrapper svg {
-  width: 5vh;
-  height: 6vh;
+  width: 35px;
+  height: 40px;
   color: #1a1a1a;
 }
 
@@ -192,13 +198,17 @@ ul li {
   outline: none;
 }
 
-
 .delivery_to {
   padding: 0;
   text-align: center;
 }
+
+.delivery_to .location {
+  display: flex;
+}
+
 .delivery_to p {
-  padding-left: 1.6rem;
+  padding-left: 23px;
 }
 .delivery_to .gpsIcon {
   font-size: 1.7em;

@@ -1,26 +1,29 @@
-import React, { useEffect } from "react";
-import classes from "./Resultd.module.css";
-import Layout from "../../Layout/Layout";
+import React, { useState, useEffect } from "react";
+import classes from "./Result.module.css";
+import Layout from "../../Components/Layout/Layout";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { prodcutUrl } from "../../../Endpionts/endPoints";
+// import { productUrl } from "../../Components/Endpionts/endPoints";
+import ProductCard from '../../Components/Product/ProductCard'
 
 function Results() {
-  const [results, setRoults] = useState([]);
+  const [results, setResults] = useState([]);
   const { categoryName } = useParams();
+const productUrl = "https://fakestoreapi.com/products";
   useEffect(() => {
     axios
-      .get(`${prodcutUrl}/products/category/${categoryName}`)
+      .get(`${productUrl}/products/category/${categoryName}`)
       .then((res) => {
-        setRoults(res.data);
+        setResults(res.data);
         console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [categoryName]); // Include categoryName in the dependency array
 
   console.log(categoryName);
+
   return (
     <Layout>
       <section>
@@ -36,4 +39,5 @@ function Results() {
     </Layout>
   );
 }
+
 export default Results;
