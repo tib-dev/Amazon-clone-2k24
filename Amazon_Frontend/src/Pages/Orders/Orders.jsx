@@ -4,7 +4,7 @@ import Layout from "../../Components/Layout/Layout";
 function Orders() {
   return (
     <Layout>
-      <h1>Your Orders</h1>
+      <div>Orders</div>
     </Layout>
   );
 }

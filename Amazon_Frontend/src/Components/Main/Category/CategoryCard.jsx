@@ -8,8 +8,10 @@ function CategoryCard({ data }) {
       <div className="">
         <div className={classes.category}>
           <Link to={`/category/${data.name}`}>
+    
             <span>
               <h2>{data.title}</h2>
+             { console.log(data.title)}
             </span>
             <img src={data.imgLink} alt={data.title} />
             <p>Shop now</p>

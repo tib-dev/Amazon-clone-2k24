@@ -1,9 +1,10 @@
-import Landing from "./Pages/Landing/Landing";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import Routing from "./Components/Router";
+
 function App() {
   return (
     <>
-      <Landing />
       <Routing />
     </>
   );
