@@ -14,6 +14,7 @@ function CarouselComponent() {
         showIndicators={false}
         showThumbs={false}
         showStatus={false}
+        stopOnHover={true}
       >
         {img.map((item, index) => (
           <div key={index}>
@@ -27,5 +28,4 @@ function CarouselComponent() {
     </div>
   );
 }
-
 export default CarouselComponent;

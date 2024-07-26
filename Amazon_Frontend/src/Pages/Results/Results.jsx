@@ -3,26 +3,30 @@ import classes from "./Result.module.css";
 import Layout from "../../Components/Layout/Layout";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-// import { productUrl } from "../../Components/Endpionts/endPoints";
-import ProductCard from '../../Components/Product/ProductCard'
+import ProductCard from "../../Components/Product/ProductCard";
+import { productUrl } from "../../Components/Endpionts/endPoints";
 
 function Results() {
   const [results, setResults] = useState([]);
   const { categoryName } = useParams();
-const productUrl = "https://fakestoreapi.com/products";
-  useEffect(() => {
-    axios
-      .get(`${productUrl}/products/category/${categoryName}`)
-      .then((res) => {
-        setResults(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [categoryName]); // Include categoryName in the dependency array
 
-  console.log(categoryName);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${productUrl}/products`, {
+          params: {
+            category: categoryName,
+          },
+        });
+        setResults(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+       
+      }
+    };
+
+    fetchProducts();
+  }, [categoryName]);
 
   return (
     <Layout>
@@ -31,9 +35,18 @@ const productUrl = "https://fakestoreapi.com/products";
         <p>Category / {categoryName}</p>
         <hr />
         <div className={classes.products_container}>
-          {results?.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {results.length > 0 ? (
+            results.map((product) => (
+              <ProductCard 
+              key={product.id} 
+              product={product}
+              renderDesc={false}
+              renderAdd={true}
+              />
+            ))
+          ) : (
+            <p>No products found for this category.</p>
+          )}
         </div>
       </section>
     </Layout>

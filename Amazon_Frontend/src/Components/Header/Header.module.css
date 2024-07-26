@@ -11,7 +11,11 @@
   text-decoration: none;
   margin: 0;
 }
-
+.header_wrapper{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 a {
   padding: 5px;
 }
@@ -95,6 +99,12 @@ ul li {
   padding-inline: 10px;
 }
 
+
+.lang img{
+  width: 25px;
+
+ 
+}
 .order p,
 .account p {
   margin: 0;

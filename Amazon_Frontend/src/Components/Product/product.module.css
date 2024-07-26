@@ -13,7 +13,7 @@
 
 .card_container {
   width: 250px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 10px;
   color: black;
