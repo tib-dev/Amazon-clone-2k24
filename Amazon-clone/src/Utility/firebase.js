@@ -1,22 +1,21 @@
 // firebase.js
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCfmK8sgIb64xVPIJg0gd9AHYLpRX-NuWU",
-  authDomain: "clone-b34f5.firebaseapp.com",
-  projectId: "clone-b34f5",
-  storageBucket: "clone-b34f5.appspot.com",
-  messagingSenderId: "243544135481",
-  appId: "1:243544135481:web:c6d1933cac45667c897ae8",
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = app.firestore();
+const db = getFirestore(app);
 
 export { auth, db };
