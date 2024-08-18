@@ -132,8 +132,9 @@ function Header() {
               className={classes.selection}
             >
               <option disabled hidden>
-                All {dropdownIcon}
+                All 
               </option>
+
               {options.map((option, index) => (
                 <option key={index}>{option}</option>
               ))}
@@ -151,7 +152,7 @@ function Header() {
                 src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
                 alt=""
               />
-              <span>EN</span>
+              <span >EN</span>
               <RiArrowDropDownFill className={classes.dropdown_icon_small} />
             </Link>
           </div>

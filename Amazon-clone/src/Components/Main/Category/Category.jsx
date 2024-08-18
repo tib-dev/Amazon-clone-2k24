@@ -1,14 +1,13 @@
 import React from "react";
-import categoryData from "./categoryData"; 
+import categoryData from "./categoryData";
 import CategoryCard from "./CategoryCard";
 import classes from "./category.module.css";
-import Results from "../../../Pages/Results/Results";
 
 function Category() {
   return (
     <div className={classes.category_container}>
-      {categoryData.map((infos) => (
-        <CategoryCard  data={infos} />
+      {categoryData.map((infos, index) => (
+        <CategoryCard key={index} data={infos} />
       ))}
     </div>
   );
