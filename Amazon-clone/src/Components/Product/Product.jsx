@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import axios from "axios";
 import classes from "./product.module.css";
-import { Loader } from "../../components/Loader/Loader";
+import { Loader } from "../../components/Loader/Loader.jsx";
 import { productUrl } from "../Endpionts/endPoints";
 
 function Product() {
