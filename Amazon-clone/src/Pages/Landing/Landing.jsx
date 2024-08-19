@@ -10,7 +10,7 @@ function Landing() {
       <Carousel />
       <Category />
       <Product />
-      < LoginLink/>
+      <LoginLink />
     </Layout>
   );
 }
