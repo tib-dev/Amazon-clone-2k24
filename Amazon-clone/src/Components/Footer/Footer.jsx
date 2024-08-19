@@ -2,14 +2,13 @@ import React from "react";
 import styles from "./Footer.module.css";
 import FooterMiddle from "./FooterMiddle";
 import FooterTop from "./FooterTop";
-
 const Footer = () => {
   return (
     <>
       <div className={styles.footer_container}>
         <div className={styles.footermiddle}>
           <FooterTop />
-          
+
           <FooterMiddle />
         </div>
         <div className={styles.footer_link_container}>
