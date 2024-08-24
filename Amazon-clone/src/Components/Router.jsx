@@ -9,13 +9,28 @@ import Cart from "../Pages/Cart/Cart";
 import ProductDetail from "../Pages/ProductDetail/ProductDetail";
 import Four4 from "../Pages/404/Four4";
 import Lang from "../Pages/Language/Lang";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+// Load the Stripe object using your publishable key
+const stripePromise = loadStripe(
+  "pk_test_51Pgi9wGNJwK6SxL49jDJtBoh0a2Z7Zs0k4EkfQ0epBqRc2MMi9TLbI7vfPGC28K1G62hjp3fllgth6ZiN8WPKx8500vzEDz1VU"
+);
 
 function Routing() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/auth" element={<SignIn />} />
-      <Route path="/payment" element={<Payment />} />
+      <Route
+        path="/payment"
+        element={
+          // Wrap the Payment component with the Elements provider
+          <Elements stripe={stripePromise}>
+            <Payment />
+          </Elements>
+        }
+      />
       <Route path="/orders" element={<Orders />} />
       <Route path="/category/:categoryName" element={<Results />} />
       <Route path="/products/:productId" element={<ProductDetail />} />
