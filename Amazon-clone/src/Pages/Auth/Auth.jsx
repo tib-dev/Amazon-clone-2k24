@@ -14,13 +14,13 @@ function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [state, dispatch] = useContext(DataContext); // Use state and dispatch
+  const [user, dispatch] = useContext(DataContext); // Use state and dispatch
   const [loading, setLoading] = useState({
     signIn: false,
     signUp: false,
   });
   const navigate = useNavigate();
-
+  console.log(user);
   const authHandler = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     setError(""); // Reset error state on new submission

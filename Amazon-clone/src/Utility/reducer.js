@@ -1,8 +1,15 @@
+// reducer.js
+
 import { Type } from "./action.type";
 
 export const initialState = {
   basket: [],
   user: null,
+  location: {
+    city: "Bole",
+    state: "Addis Ababa",
+    country: "Ethiopia",
+  },
 };
 
 export const reducer = (state = initialState, action) => {
@@ -53,7 +60,13 @@ export const reducer = (state = initialState, action) => {
     case Type.SET_USER:
       return {
         ...state,
-        user: action.user,
+        user: action.payload,
+      };
+
+    case Type.SET_LOCATION:
+      return {
+        ...state,
+        location: action.payload, // Update the location in the state
       };
 
     default:

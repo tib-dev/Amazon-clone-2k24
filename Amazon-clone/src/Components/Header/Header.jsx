@@ -5,18 +5,86 @@ import { RiArrowDropDownFill } from "react-icons/ri";
 import { FiShoppingCart } from "react-icons/fi";
 import { TiThMenu, TiLocationOutline } from "react-icons/ti";
 import brand from "../../assets/image/amazonbrand.png";
-import { DataContext } from "../DataProvider/DataProvider"; // Ensure correct import
+import { DataContext } from "../DataProvider/DataProvider";
 import classes from "./Header.module.css";
 import { auth } from "../../Utility/firebase";
 
 function Header() {
-  const [state, dispatch] = useContext(DataContext); // Correct destructuring
-  const { user, basket } = state; // Destructure user and basket from state
+  const [state, dispatch] = useContext(DataContext);
+  const { user, basket } = state;
   const selectRef = useRef(null);
   const [selectWidth, setSelectWidth] = useState("auto");
-  const dropdownIcon = <RiArrowDropDownFill className={classes.dropdownIcon} />;
-
+  const [location, setLocation] = useState(null);
+  // const dropdownIcon = <RiArrowDropDownFill className={classes.dropdownIcon} />;
+  console.log(location);
   useEffect(() => {
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    };
+
+    const showPosition = async (position, retries = 3) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      const fetchLocation = async (retryCount) => {
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+          );
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+          }
+          const data = await response.json();
+
+          // Store the computed location value in the state
+          const location =
+            data.address.country ||
+            data.address.city ||
+            data.address.state ||
+            "Location not found";
+
+          setLocation(location);
+        } catch (error) {
+          console.error("Error fetching location:", error);
+          if (retryCount > 0) {
+            setTimeout(() => fetchLocation(retryCount - 1), 1000);
+          } else {
+            setLocation("Location not available");
+            console.warn(
+              "Failed to retrieve location after multiple attempts."
+            );
+          }
+        }
+      };
+
+      fetchLocation(retries);
+    };
+
+    const showError = (error) => {
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          alert("User denied the request for Geolocation.");
+          break;
+        case error.POSITION_UNAVAILABLE:
+          alert("Location information is unavailable.");
+          break;
+        case error.TIMEOUT:
+          alert("The request to get user location timed out.");
+          break;
+        case error.UNKNOWN_ERROR:
+          alert("An unknown error occurred.");
+          break;
+        default:
+          break;
+      }
+    };
+
+    getLocation();
+
     const adjustSelectWidth = () => {
       if (selectRef.current) {
         const option =
@@ -29,7 +97,7 @@ function Header() {
         tempDiv.style.whiteSpace = "nowrap";
         tempDiv.innerHTML = option.text;
         document.body.appendChild(tempDiv);
-        const width = tempDiv.clientWidth + 20; // Add some padding
+        const width = tempDiv.clientWidth + 20;
         document.body.removeChild(tempDiv);
         setSelectWidth(`${width}px`);
       }
@@ -88,18 +156,6 @@ function Header() {
     "Women's Fashion",
   ];
 
-  const handleSignOut = async () => {
-    try {
-      await auth.signOut();
-      dispatch({
-        type: "SET_USER",
-        payload: null,
-      });
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  };
-
   return (
     <div className={classes.header_wrapper}>
       <div className={classes.nav_top_wrapper}>
@@ -116,7 +172,7 @@ function Header() {
                 <span>
                   <TiLocationOutline className={classes.gpsIcon} />
                 </span>
-                <span> Ethiopia</span>
+                <span>{location}</span> {/* Display the location here */}
               </div>
             </Link>
           </div>
@@ -132,7 +188,7 @@ function Header() {
               className={classes.selection}
             >
               <option disabled hidden>
-                All 
+                All
               </option>
 
               {options.map((option, index) => (
@@ -152,30 +208,31 @@ function Header() {
                 src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
                 alt=""
               />
-              <span >EN</span>
+              <span>EN</span>
               <RiArrowDropDownFill className={classes.dropdown_icon_small} />
             </Link>
           </div>
           <div className={classes.account}>
-            {user ? (
+            <Link to="/auth">
               <div>
-                <p>Hello {user.email.split("@")[0]}</p>
-                <span
-                  onClick={(e) => {
-                    e.preventDefault(); // Prevent the default link behavior
-                    handleSignOut();
-                  }}
-                  className={classes.signout}
-                >
-                  Sign Out
-                </span>
+                {user ? (
+                  <>
+                    <p>Hello, {user.email.split("@")[0]}</p>
+                    <span
+                      onClick={() => auth.signOut()}
+                      className={classes.signout}
+                    >
+                      Sign Out
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <p>Hello, sign in</p>
+                    <span>Account & Lists</span>
+                  </>
+                )}
               </div>
-            ) : (
-              <Link to="/auth">
-                <p>Hello, sign in</p>
-                <span>Account & Lists</span>
-              </Link>
-            )}
+            </Link>
           </div>
           <div className={classes.order}>
             <Link to="/orders">
