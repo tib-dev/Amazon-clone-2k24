@@ -6,6 +6,8 @@ import ProductCard from "../../Components/Product/ProductCard";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import CurrencyFormat from "../../Components/CurrencyFormat/CurrencyFormat";
 import { axiosInstance } from "../../api/axios";
+import { db } from "../../Utility/firebase";
+import { doc, setDoc, collection } from "firebase/firestore"; // Import Firestore functions
 
 function Payment() {
   const [{ user, basket, location }] = useContext(DataContext);
@@ -44,18 +46,33 @@ function Payment() {
 
       const clientSecret = response.data.clientSecret;
 
-      const confirmations = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      });
+      const { paymentIntent, error } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          },
+        }
+      );
 
-      if (confirmations.error) {
-        console.error("Payment failed", confirmations.error);
-        setCardError(confirmations.error.message);
-      } else {
-        console.log("Payment succeeded");
-        // Handle successful payment here
+      if (error) {
+        console.error("Payment failed", error);
+        setCardError(error.message);
+      } else if (paymentIntent) {
+        console.log("Payment succeeded", paymentIntent);
+
+        if (user) {
+          const userOrdersRef = doc(
+            collection(db, "users", user.uid, "orders"),
+            paymentIntent.id
+          );
+          await setDoc(userOrdersRef, {
+            basket: basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          });
+        }
+        // Optionally, clear the basket or navigate to a success page here
       }
     } catch (error) {
       console.error("Payment failed", error);
