@@ -11,6 +11,7 @@ import Four4 from "../Pages/404/Four4";
 import Lang from "../Pages/Language/Lang";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import ProtectedRoutes from "./ProtectedRoutes/ProtectedRoutes";
 
 // Load the Stripe object using your publishable key
 const stripePromise = loadStripe(
@@ -26,12 +27,27 @@ function Routing() {
         path="/payment"
         element={
           // Wrap the Payment component with the Elements provider
-          <Elements stripe={stripePromise}>
-            <Payment />
-          </Elements>
+
+          <ProtectedRoutes msg={"You must log in to pay"} redirect={"/payment"}>
+            <Elements stripe={stripePromise}>
+              <Payment />
+            </Elements>
+          </ProtectedRoutes>
         }
       />
-      <Route path="/orders" element={<Orders />} />
+      <Route
+        path="/orders"
+        element={
+          <ProtectedRoutes
+            msg={"You must log in to see your orders"}
+            redirect={"/orders"}
+          >
+            <Elements stripe={stripePromise}>
+              <Orders />
+            </Elements>
+          </ProtectedRoutes>
+        }
+      />
       <Route path="/category/:categoryName" element={<Results />} />
       <Route path="/products/:productId" element={<ProductDetail />} />
       <Route path="/cart" element={<Cart />} />
