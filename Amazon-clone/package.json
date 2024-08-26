@@ -15,7 +15,7 @@
     "@mui/material": "^5.16.7",
     "@stripe/react-stripe-js": "^2.8.0",
     "@stripe/stripe-js": "^4.3.0",
-    "axios": "^1.7.4",
+    "axios": "^1.7.5",
     "dotenv": "^16.4.5",
     "firebase": "^10.12.5",
     "install": "^0.13.0",
